@@ -1,6 +1,6 @@
-# Base Domain Service
+# base-domain-svc
 
-A Java web application that uses JSON configuration to mock REST endpoints. It matches incoming requests to configurations stored in MongoDB, performs the configured data operation, and returns the result.
+A configurable REST service that routes requests to JSON-defined operations backed by MongoDB. It matches incoming requests to configurations stored in MongoDB, performs the configured data operation, and returns the result.
 
 > **Development and testing only. Do not expose this service in production.** Its management endpoints can modify or delete MongoDB data and do not provide authentication.
 
