@@ -1,0 +1,242 @@
+[
+  {
+    "url": "/demo-records",
+    "verb": "post",
+    "description": "Create a record from the request body",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "create",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "body"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records",
+    "verb": "get",
+    "description": "List records",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "read",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "type": "projections",
+            "fieldsToReturn": [
+              "recordId",
+              "name",
+              "status",
+              "items"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}",
+    "verb": "get",
+    "description": "Read one record by recordId",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "read",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}",
+    "verb": "put",
+    "description": "Update a record field",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "update",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          },
+          {
+            "source": "body",
+            "refString": "name",
+            "targetAttribute": "name",
+            "type": "data",
+            "dataType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}",
+    "verb": "patch",
+    "description": "Partially update a record field",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "update",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          },
+          {
+            "source": "body",
+            "refString": "status",
+            "targetAttribute": "status",
+            "type": "data",
+            "dataType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}",
+    "verb": "delete",
+    "description": "Delete a record by recordId",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "delete",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}/items",
+    "verb": "post",
+    "description": "Add an item to a record",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "update-array-add-element",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          },
+          {
+            "source": "body",
+            "refString": "item",
+            "targetAttribute": "items",
+            "type": "data",
+            "dataType": "object"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}/items/{{itemId}}",
+    "verb": "put",
+    "description": "Update an item field in a record",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "update-array-element",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          },
+          {
+            "source": "path-param",
+            "refString": "itemId",
+            "targetAttribute": "item.itemId",
+            "type": "arrayFilter"
+          },
+          {
+            "source": "body",
+            "refString": "name",
+            "targetAttribute": "items.$[item].name",
+            "type": "data",
+            "dataType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/{{recordId}}/items/{{itemId}}",
+    "verb": "delete",
+    "description": "Delete an item from a record",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "update-array-delete-element",
+        "table": "demo-records",
+        "criteria": [
+          {
+            "source": "path-param",
+            "refString": "recordId",
+            "targetAttribute": "recordId",
+            "type": "filter"
+          },
+          {
+            "source": "path-param",
+            "refString": "itemId",
+            "targetAttribute": "items",
+            "type": "deletekey",
+            "dataType": "string"
+          },
+          {
+            "source": "path-param",
+            "refString": "itemId",
+            "targetAttribute": "itemId",
+            "type": "deleteFilter",
+            "dataType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "url": "/demo-records/status",
+    "verb": "get",
+    "description": "Return a fixed response without querying MongoDB",
+    "group": "demo-records",
+    "actions": [
+      {
+        "type": "fixed-return",
+        "fixedData": "{\"status\":\"ok\"}"
+      }
+    ]
+  }
+]

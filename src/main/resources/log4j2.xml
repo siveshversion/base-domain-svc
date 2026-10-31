@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO">
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<JsonLayout complete="false" compact="true"
+				eventEol="true" />
+		</Console>
+		<RollingFile name="svc-log"
+			fileName="${env:ENV_LOG_FILE:-log/service.log}"
+			filePattern="${env:ENV_LOG_FILE:-log/service.log}.%d{dd-MM-yyyy}.gz"
+			ignoreExceptions="false">
+			<PatternLayout
+				pattern="%d{DEFAULT} %X{servicing-contract-ref} %X{consumer-message-id} %-5level [%C{1}::%M::%L] - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<root level="${env:ENV_LOG_LEVEL:-debug}">
+			<appender-ref ref="svc-log" />
+			<appender-ref ref="Console" />
+		</root>
+	</loggers>
+</configuration>
